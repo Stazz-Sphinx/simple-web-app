@@ -30,7 +30,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Buid docker image and publish to DockerHub
-        uses: docker/buid-push-action@v3
+        uses: docker/build-push-action@v3
         with:
           context: .
           # build on feature branches, push only on main branch
