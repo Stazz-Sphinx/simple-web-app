@@ -1,0 +1,40 @@
+name: Build and Publish
+
+on:
+  # run  it on push to the repository
+  push:
+    branches:
+      - "main"
+  # run it during the pull request
+  pull_request:
+
+jobs:
+  # define job to build a dn publish doacker image
+  build-and-publish-docker-image:
+    name: Build and Publish docker image
+    runs-on: ubuntu-latest
+
+    #steps to perform the job
+    steps:
+      - name: Checkout the code
+        uses: action/checkout@v3
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-build-action@v2
+        id: buildx
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Buid docker image and publish to DockerHub
+        uses: docker/buid-push-action@v3
+        with:
+          context: .
+          # build on feature branches, push only on main branch
+          push: ${{ github.ref == 'refs/heads/main' }}
+          #push: true
+          tags: |
+            stazz/simple-web-app:latest
