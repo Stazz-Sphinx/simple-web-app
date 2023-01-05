@@ -1,4 +1,4 @@
-name: Build and Publish
+name: Build and publish Docker image
 
 on:
   # run  it on push to the repository
@@ -9,7 +9,7 @@ on:
   pull_request:
 
 jobs:
-  # define job to build a dn publish doacker image
+  # define job to build and publish docker image
   build-and-publish-docker-image:
     name: Build and Publish docker image
     runs-on: ubuntu-latest
